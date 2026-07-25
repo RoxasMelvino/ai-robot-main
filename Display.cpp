@@ -8,14 +8,14 @@ void lcdInit(int numCols, int numRows, int cursorCol, int cursorRow) {
   lcd.print("Ready to connect");
 } 
 
-void lcdPrintVals(float x, float y, float w) {
+void lcdPrintVals(float w, float velX, float velY) {
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("X    Y    W");
+  lcd.print("W     X     Y");
   lcd.setCursor(0, 1); 
-  lcd.print(x);
-  lcd.print(" ");
-  lcd.print(y);
-  lcd.print(" ");
   lcd.print(w);
+  lcd.print(" ");
+  lcd.print(velX);
+  lcd.print(" ");
+  lcd.print(velY);
 } 
