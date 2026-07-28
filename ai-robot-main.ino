@@ -1,12 +1,6 @@
 #include "Display.h"
 #include "MecanumKinematics.h"
 
-int flPin; 
-int frPin = 10; 
-int rrPin; 
-int rlPin; 
-
-
 const int BUFFER = 20;  // bytes
 char actionSpace[BUFFER];
 int index = 0;  
@@ -41,4 +35,3 @@ void loop() {
   }
 
 }
-

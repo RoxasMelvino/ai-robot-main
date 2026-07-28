@@ -24,6 +24,8 @@ extern float radius, length, width, motorMax;
 
 extern float w, vx, vy;  // action space values range from -1.0 to 1.0
 
+extern int flDirPin, flPwmPin; 
+
 void initGeometry(float &r, float &l, float &width, float rVal, float lVal, float widthVal); // measure the robot in meters! 
 void parseActionSpace(char *action, float &w, float &velX, float &velY);  // action space is a string, so we need to parse it 
 void drive(float l, float width, float r, float w, float velX, float velY, float motorMax); 
