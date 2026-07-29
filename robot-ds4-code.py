@@ -19,7 +19,7 @@ deadzone_thresh = 0.10
 devices = [evdev.InputDevice(path) for path in evdev.list_devices()] 
 for device in devices: 
     print(device.name)
-    if (device.name == "Wireless Controller"):
+    if (device.name == "Wireless Controller"):  
         ds4ControllerPath = device.path
         
 ds4Controller = evdev.InputDevice(ds4ControllerPath)
@@ -29,6 +29,7 @@ for event in ds4Controller.read_loop():
         button_name = evdev.ecodes.ABS[event.code]
         if (button_name == "ABS_X"):
             js_raw_x = event.value
+            print(js_raw_x)
         elif (button_name == "ABS_Y"):
             js_raw_y = event.value
         elif (button_name == "ABS_RX"): # right joystick
