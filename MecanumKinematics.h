@@ -3,15 +3,7 @@
 
 #include <Arduino.h>
 #include "string.h"
-
-/*
-  inverse kinematics of 4 mecanum wheels
-  float flMotor = (1/r) * (-w * (length + width) + vx - vy);
-  float frMotor = (1/r) * (w * (length + width) + vx + vy);
-  float rrMotor = (1/r) * (w * (length + width) + vx - vy);
-  float rlMotor = (1/r) * (-w * (length + width) + vx + vy);
-*/
-
+#include <stdint.h>
 
 /*
   ALL MEASURED IN METERS!!!!!!
@@ -20,14 +12,26 @@
   width: perpendicular distance from center of the wheel to the x axis 
   motorMax: the maximum speed each motor can take, which will be used to scale motor speeds into PWM values. This varies with length and width   
 */
-extern float radius, length, width, motorMax;
+typedef struct {
+  float length;
+  float width;
+  float radius;
+} Measurement;
 
-extern float w, vx, vy;  // action space values range from -1.0 to 1.0
+typedef struct {
+  float w;
+  float vx;
+  float vy;
+  float motorMax;
+} Action;  // action space values range from -1.0 to 1.0
 
-extern int flDirPin, flPwmPin; 
+typedef struct {
+  const uint8_t flDir, frDir, rrDir, rlDir;
+  const uint8_t flPwm, frPwm, rrPwm, rlPwm;
+} MotorPins;
 
-void initGeometry(float &r, float &l, float &width, float rVal, float lVal, float widthVal); // measure the robot in meters! 
-void parseActionSpace(char *action, float &w, float &velX, float &velY);  // action space is a string, so we need to parse it 
-void drive(float l, float width, float r, float w, float velX, float velY, float motorMax); 
+void initGeometry(Measurement &measurements, float rVal, float lVal, float widthVal);  // measure the robot in meters!
+void parseActionSpace(char *actionString, Action &actions);                      // action space is a string, so we need to parse it
+void drive(Measurement &measurements, Action &actions, MotorPins &motorPins);
 
-#endif // __MECANUMKINEMATICS_H__
+#endif  // __MECANUMKINEMATICS_H__
