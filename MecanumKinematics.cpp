@@ -16,8 +16,6 @@ void parseActionSpace(char *actionString, Action &actions) {
     actions.vx = atof(xStr); 
     actions.vy = atof(yStr); 
   }
-
-  actions.motorMax = 65.8; // hardcode this for now
 }
 
 void drive(Measurement &measurements, Action &actions, MotorPins &motorPins) {
@@ -36,6 +34,13 @@ void drive(Measurement &measurements, Action &actions, MotorPins &motorPins) {
   digitalWrite(motorPins.rrDir, motorPins.rrDir >= 0 ? HIGH : LOW);
   digitalWrite(motorPins.rlDir, motorPins.rlDir >= 0 ? HIGH : LOW);
   
-  float scaled = fabs(flMotor * (255/actions.motorMax)); 
-  analogWrite(motorPins.flPwm, scaled); 
+  float frScaled = fabs(flMotor * (255/actions.motorMax)); 
+  float flScaled = fabs(frMotor * (255/actions.motorMax)); 
+  float rrScaled = fabs(rrMotor * (255/actions.motorMax)); 
+  float rlScaled = fabs(rlMotor * (255/actions.motorMax)); 
+  
+  analogWrite(motorPins.flPwm, flScaled); 
+  analogWrite(motorPins.frPwm, frScaled); 
+  analogWrite(motorPins.rrPwm, rrScaled); 
+  analogWrite(motorPins.rlPwm, rlScaled); 
 }
