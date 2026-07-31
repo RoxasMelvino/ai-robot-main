@@ -1,14 +1,18 @@
 #include "Display.h"
 #include "MecanumKinematics.h"
 
+Action actions = {0.00, 0.00, 0.00, 65.8}; // w, vx, vy, motorMax 
+Measurement measurements;
+MotorPins motorPins = {53, 51, 49, 47, 2, 3, 4, 5}; // only pins 53 (dir) and 2 (pwm) are wired so far
+ 
 const int BUFFER = 20;  // bytes
-char actionSpace[BUFFER];
+char actionSpaceString[BUFFER];
 int index = 0;  
 
 void setup() {
   Serial.begin(115200);  
   lcdInit(); 
-  // initGeometry(radius, length, width, 0.0325, 0.0364, 0.102);
+  initGeometry(measurements, 0.0325, 0.0364, 0.102);
 }
 
 void loop() { 
@@ -18,14 +22,14 @@ void loop() {
     if (rawVal != -1) {
       char val = (char)rawVal;
       if (val == '\n') {
-        actionSpace[index] = '\0';  // the action space is a string of normalized values ranging from -1 to 1
+        actionSpaceString[index] = '\0';  // the action space is a string of normalized values ranging from -1 to 1
         index = 0;
 
-        // parseActionSpace(actionSpace, w, vx, vy); 
-        // drive(length, width, radius, w, vx, vy, motorMax); 
+        parseActionSpace(actionSpaceString, actions); 
+        drive(measurements, actions, motorPins); 
       } 
       else if (index < BUFFER - 1) {
-        actionSpace[index] = val; 
+        actionSpaceString[index] = val; 
         index++; 
       }
       else {
