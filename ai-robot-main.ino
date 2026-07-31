@@ -8,7 +8,7 @@ int index = 0;
 void setup() {
   Serial.begin(115200);  
   lcdInit(); 
-  initGeometry(radius, length, width, 0.0325, 0.0364, 0.102);
+  // initGeometry(radius, length, width, 0.0325, 0.0364, 0.102);
 }
 
 void loop() { 
@@ -21,8 +21,8 @@ void loop() {
         actionSpace[index] = '\0';  // the action space is a string of normalized values ranging from -1 to 1
         index = 0;
 
-        parseActionSpace(actionSpace, w, vx, vy); 
-        drive(length, width, radius, w, vx, vy, motorMax); 
+        // parseActionSpace(actionSpace, w, vx, vy); 
+        // drive(length, width, radius, w, vx, vy, motorMax); 
       } 
       else if (index < BUFFER - 1) {
         actionSpace[index] = val; 
