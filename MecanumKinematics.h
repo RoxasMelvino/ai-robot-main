@@ -23,15 +23,15 @@ typedef struct {
   float vx;
   float vy;
   float motorMax;
-} Action;  // action space values range from -1.0 to 1.0
+} Action;  // w, vx, and vy range from -1.0 to 1.0
 
 typedef struct {
   const uint8_t flDir, frDir, rrDir, rlDir;
   const uint8_t flPwm, frPwm, rrPwm, rlPwm;
 } MotorPins;
 
-void initGeometry(Measurement &measurements, float rVal, float lVal, float widthVal);  // measure the robot in meters!
-void parseActionSpace(char *actionString, Action &actions);                      // action space is a string, so we need to parse it
+void initGeometry(Measurement &measurements, float rVal, float lVal, float widthVal); 
+void parseActionSpace(char *actionString, Action &actions);                     
 void drive(Measurement &measurements, Action &actions, MotorPins &motorPins);
 
 #endif  // __MECANUMKINEMATICS_H__
