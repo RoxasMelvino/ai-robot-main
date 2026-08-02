@@ -7,6 +7,8 @@ void initGeometry(Measurement &measurements, float rVal, float lVal, float width
 }
 
 void parseActionSpace(char *actionString, Action &actions) {
+    // TODO: use strtod instead of this shitty code
+    
   char* wStr = strtok(actionString, ",");
   char* xStr = strtok(NULL, ","); 
   char* yStr = strtok(NULL, ",");
@@ -29,10 +31,10 @@ void drive(Measurement &measurements, Action &actions, MotorPins &motorPins) {
   float rrMotor = (1/measurements.radius) * (actions.w * (measurements.length + measurements.width) + actions.vx - actions.vy);
   float rlMotor = (1/measurements.radius) * (-actions.w * (measurements.length + measurements.width) + actions.vx + actions.vy);
   
-  digitalWrite(motorPins.flDir, motorPins.flDir >= 0 ? HIGH : LOW);
-  digitalWrite(motorPins.frDir, motorPins.frDir >= 0 ? HIGH : LOW);
-  digitalWrite(motorPins.rrDir, motorPins.rrDir >= 0 ? HIGH : LOW);
-  digitalWrite(motorPins.rlDir, motorPins.rlDir >= 0 ? HIGH : LOW);
+  digitalWrite(motorPins.flDir, flMotor >= 0 ? HIGH : LOW);
+  digitalWrite(motorPins.frDir, frMotor >= 0 ? HIGH : LOW);
+  digitalWrite(motorPins.rrDir, rrMotor >= 0 ? HIGH : LOW);
+  digitalWrite(motorPins.rlDir, rlMotor >= 0 ? HIGH : LOW);
   
   float frScaled = fabs(flMotor * (255/actions.motorMax)); 
   float flScaled = fabs(frMotor * (255/actions.motorMax)); 
